@@ -3,6 +3,7 @@
 public class PlayerController : MonoBehaviour
 {
     public float speed;
+    private int score = 0;
     private Rigidbody rb;
 
     // Start is called before the first frame update
@@ -21,5 +22,15 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new Vector3 (XInput, 0.0f, ZInput);
         
         rb.AddForce(movement * speed);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Pickup"))
+        {
+            score++;
+            Debug.Log("Score: " + score.ToString());
+            other.gameObject.SetActive(false);
+        }
     }
 }
