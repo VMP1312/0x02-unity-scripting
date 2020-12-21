@@ -4,9 +4,10 @@ public class PlayerController : MonoBehaviour
 {
     public float speed;
     private int score = 0;
+    public int health = 5;
     private Rigidbody rb;
 
-    // Start is called before the first frame update
+    // Start is called before the first frame update.
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -15,7 +16,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-       // Get info from User to move in the X and Y axis
+       // Move player on X and Y axis.
         float XInput = Input.GetAxis("Horizontal");
         float ZInput = Input.GetAxis("Vertical");
 
@@ -26,11 +27,20 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        ///Increment Score when pick a coin.
         if(other.gameObject.CompareTag("Pickup"))
         {
             score++;
             Debug.Log("Score: " + score.ToString());
             other.gameObject.SetActive(false);
+        }
+
+        ///Decrement Health when touch a trap.
+        if(other.gameObject.CompareTag("Trap"))
+        {
+            health--;
+            other.gameObject.SetActive(true);
+            Debug.Log("Health: " + health.ToString());
         }
     }
 }
